@@ -1,17 +1,18 @@
-  </div> {{-- container --}}
-  <footer class="footer">
-    <div class="container text-center">
-      <div class="row align-items-center">
-        <div class="col-md-6 text-md-start">
-          <small>© Universidad Tecnológica de Panamá — MiniProyecto1</small>
-        </div>
-        <div class="col-md-6 text-md-end">
-          <small>Generado el {{ date('d/m/Y') }}</small>
+<div class="row g-3 mb-4">
+  @for ($i = 1; $i <= 10; $i++)
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card problem-card h-100">
+        <div class="card-body d-flex flex-column justify-content-between">
+          <div>
+            <small class="text-muted">Problema #{{ $i }}</small>
+            <h6 class="mt-2">Ejercicio {{ $i }}</h6>
+          </div>
+          <div class="mt-3 d-flex justify-content-between align-items-center">
+            <a href="{{ route('problema.show', ['p' => $i]) }}" class="btn btn-gradient btn-sm">Abrir</a>
+            <span class="badge bg-light text-muted">#{{ $i }}</span>
+          </div>
         </div>
       </div>
     </div>
-  </footer>
-
-  {{-- scripts are included by Vite, but Bootstrap JS is imported in resources/js/app.js --}}
-</body>
-</html>
+  @endfor
+</div>

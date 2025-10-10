@@ -20,17 +20,14 @@ if ($enviado) {
             $resultado = Utils::sumaUnoAN($n);
             $explicacion = "Fórmula de Gauss";
             break;
-        default:
-            $resultado = "Método desconocido";
-            $explicacion = "Sin cálculo";
     }
 }
 @endphp
 
 <div class="card-app">
-  <h3 class="text-danger mb-3">Problema 2 — Suma 1..1000</h3>
+  <h3 class="text-primary mb-3">Problema 2 — Suma 1..1000</h3>
 
-  <form method="post" action="{{ route('problema.show', ['p' => 2]) }}" class="mb-4">
+  <form method="post" class="mb-4">
     @csrf
     <div class="form-check">
       <input class="form-check-input" type="radio" name="metodo" value="for" id="for" {{ $metodo==='for' ? 'checked' : '' }}>
@@ -41,17 +38,16 @@ if ($enviado) {
       <label for="gauss" class="form-check-label">Fórmula de Gauss</label>
     </div>
 
-    <div class="d-flex gap-2">
-      <button class="btn btn-primary-custom">Calcular</button>
-      {!! \App\Support\ViewHelpers::backLink() !!}
-    </div>
+    <button class="btn-gradient">Calcular</button>
+    {!! \App\Support\ViewHelpers::backLink() !!}
   </form>
 
   @if ($enviado)
-    <hr>
+    <div class="alert alert-success">Resultado: <strong>{{ number_format($resultado, 0, ',', '.') }}</strong></div>
     <p class="text-muted">Método: {{ $explicacion }}</p>
-    <div class="alert alert-success mt-2">Resultado: <strong>{{ number_format($resultado, 0, ',', '.') }}</strong></div>
   @endif
 </div>
 
+@include('partials.firma', ['p' => $p])
 @include('layouts.footer')
+

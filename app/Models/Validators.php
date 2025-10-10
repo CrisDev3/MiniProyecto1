@@ -26,7 +26,6 @@ class Validators
     public static function esEnteroPositivo($v): bool
     {
         $v = trim((string)$v);
-        // permite "0"? la guía pide positivos: usamos >=1
         return preg_match('/^[1-9]\d*$/', $v) === 1;
     }
 }

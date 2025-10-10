@@ -43,4 +43,6 @@ if ($enviado) {
   @endif
 </div>
 
+@include('partials.firma', ['p' => $p])
 @include('layouts.footer')
+

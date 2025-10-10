@@ -1,93 +1,85 @@
-/* resources/css/app.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Inter:wght@400;500&display=swap');
 
-/* Tipografía y fondo */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-
-:root{
-  --brand: #b83280;      /* magenta-académico */
-  --accent: #ff7aa2;     /* rosa claro */
-  --muted: #6b7280;
-  --card-bg: #ffffff;
-  --surface: #f7f7fb;
+:root {
+  --magenta: #d63384;
+  --violet: #6f42c1;
+  --blue: #0d6efd;
+  --text-dark: #212529;
+  --bg-soft: #f8f9fc;
+  --muted: #6c757d;
 }
 
+/* Body como contenedor flex para que el footer quede abajo */
 body {
-  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  background: linear-gradient(180deg, #fff 0%, #fbf8ff 100%);
-  color: #222;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* altura mínima de toda la pantalla */
+  background: radial-gradient(circle at top right, rgba(111,66,193,0.1), rgba(13,110,253,0.05), #f9f9ff);
+  color: var(--text-dark);
+  font-family: 'Inter', sans-serif;
 }
 
-/* Hero / header */
-.hero {
-  background: linear-gradient(90deg, rgba(184,50,128,0.06), rgba(255,122,162,0.02));
-  padding: 1.25rem 0.8rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1.25rem;
+/* Contenedor principal que ocupa todo el espacio disponible */
+.main-content {
+  flex: 1;
 }
 
-/* Marca */
-.brand {
-  display:flex;
-  align-items:center;
-  gap:0.75rem;
+/* Navbar */
+.navbar {
+  background: linear-gradient(90deg, var(--magenta), var(--violet), var(--blue));
 }
-.brand .logo {
-  width:48px;
-  height:48px;
-  border-radius:8px;
-  background: linear-gradient(135deg,var(--brand),var(--accent));
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  font-weight:700;
-  box-shadow: 0 6px 20px rgba(184,50,128,0.12);
+.navbar-brand, .nav-link, .navbar a.btn {
+  color: white !important;
 }
 
-/* Cards */
+/* Tarjetas */
 .card-app {
-  background-color: var(--card-bg);
-  border-radius: 0.75rem;
-  padding: 1.25rem;
-  box-shadow: 0 6px 18px rgba(15,15,25,0.04);
+  background: white;
+  border-top: 5px solid var(--violet);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
 }
 
-/* Grid of problem cards */
-.problem-card {
-  transition: transform .12s ease, box-shadow .12s ease;
-}
-.problem-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 36px rgba(15,15,25,0.08);
-}
-
-/* Buttons */
-.btn-primary-custom {
-  background-image: linear-gradient(90deg, var(--brand) 0%, var(--accent) 100%);
+/* Botón principal */
+.btn-gradient {
+  background-image: linear-gradient(90deg, var(--magenta), var(--violet), var(--blue));
   border: none;
   color: white;
-  padding: 0.5rem 0.9rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 6px 18px rgba(184,50,128,0.12);
+  border-radius: .5rem;
+  padding: .5rem 1rem;
 }
-.btn-primary-custom:active { transform: translateY(1px); }
-
-/* Table small tweaks */
-.table thead th {
-  background: #fafafa;
+.btn-gradient:hover {
+  opacity: .9;
 }
 
 /* Footer */
 .footer {
-  border-top: 1px solid #efefef;
-  padding: 1rem 0;
-  margin-top: 2.25rem;
-  color: var(--muted);
+  background: linear-gradient(90deg, #d63384, #6f42c1, #0d6efd);
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 0.9rem;
+  width: 100%;
+  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive tweaks */
-@media (max-width: 767px) {
-  .brand .logo { width:40px; height:40px; }
+/* Firma de autor */
+.autor-card {
+  background: #fff;
+  border-left: 6px solid var(--violet);
+  border-radius: .75rem;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+  text-align: center;
+  margin-top: 2rem;
+}
+.autor-card h6 {
+  color: var(--violet);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+.autor-card .icon {
+  font-size: 1.8rem;
+  color: var(--magenta);
 }

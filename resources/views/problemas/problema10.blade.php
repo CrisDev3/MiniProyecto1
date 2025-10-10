@@ -1,7 +1,7 @@
-include('layouts.header')
+@include('layouts.header')
 
 <div class="card-app">
-  <h3 class="text-danger mb-3">Problema 10 — (Plantilla)</h3>
+  <h3 class="text-danger mb-3">Problema 8 — (Plantilla)</h3>
   <p>Ejemplo de estructura básica para nuevos problemas.</p>
 
   <form method="post" action="{{ route('problema.show', ['p' => 8]) }}">
@@ -20,4 +20,6 @@ include('layouts.header')
   @endif
 </div>
 
+@include('partials.firma', ['p' => $p])
 @include('layouts.footer')
+

@@ -1,21 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class ProblemaController extends Controller
 {
-    public function show(Request $request, int $p)
+    public function show(int $p)
     {
         if ($p < 1 || $p > 10) {
-            return redirect()->route('menu')->with('error', 'Problema no encontrado.');
+            return redirect()->route('menu');
         }
-
-        $view = "problemas.problema{$p}";
-        if (!view()->exists($view)) {
-            return back()->with('error', "Vista del problema {$p} no disponible.");
-        }
-
-        return view($view);
+        return view("problemas.problema{$p}", ['p' => $p]);
     }
 }
