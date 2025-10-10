@@ -4,42 +4,50 @@
 use App\Models\Validators;
 
 $enviado = request()->isMethod('post');
-$datos = [];
-$resultado = [];
 $error = null;
+$resultado = [];
+$ventas = []; // Arreglo bidimensional [producto][vendedor]
+$totalesProductos = [];
+$totalesVendedores = [];
+$granTotal = 0;
+
+// Inicializar ventas con ceros
+for ($p = 1; $p <= 5; $p++) {
+    for ($v = 1; $v <= 4; $v++) {
+        $ventas[$p][$v] = 0.0;
+    }
+    $totalesProductos[$p] = 0.0;
+}
+for ($v = 1; $v <= 4; $v++) {
+    $totalesVendedores[$v] = 0.0;
+}
 
 if ($enviado) {
-    // Validar que todos los datos fueron enviados
     $vendedores = request('vendedores');
+
     if (!is_array($vendedores) || count($vendedores) == 0) {
         $error = "Por favor, ingresa al menos un vendedor con sus productos vendidos.";
     } else {
-        // Inicializar matriz de ventas [producto][vendedor]
-        $ventas = [];
-        for ($p = 1; $p <= 5; $p++) {
-            for ($v = 1; $v <= 4; $v++) {
-                $ventas[$p][$v] = 0;
-            }
-        }
-
-        // Procesar los datos enviados
+        // Procesar los datos de cada vendedor
         foreach ($vendedores as $vendedor) {
+            if (!isset($vendedor['numero']) || !isset($vendedor['productos'])) continue;
+
             $numV = (int)$vendedor['numero'];
-            $productos = $vendedor['productos'] ?? [];
-            foreach ($productos as $producto) {
+            if ($numV < 1 || $numV > 4) continue;
+
+            foreach ($vendedor['productos'] as $producto) {
+                if (!isset($producto['numero']) || !isset($producto['monto'])) continue;
+
                 $numP = (int)$producto['numero'];
-                $monto = (float)$producto['monto'];
-                if ($numV >= 1 && $numV <= 4 && $numP >= 1 && $numP <= 5 && $monto > 0) {
+                $monto = floatval($producto['monto']);
+
+                if ($numP >= 1 && $numP <= 5) {
                     $ventas[$numP][$numV] += $monto;
                 }
             }
         }
 
-        // Calcular totales
-        $totalesProductos = [];
-        $totalesVendedores = [1 => 0, 2 => 0, 3 => 0, 4 => 0];
-        $granTotal = 0;
-
+        // Calcular totales por producto y vendedor
         for ($p = 1; $p <= 5; $p++) {
             $totalesProductos[$p] = array_sum($ventas[$p]);
             $granTotal += $totalesProductos[$p];
@@ -61,34 +69,28 @@ if ($enviado) {
 <div class="card-app">
   <h3 class="text-danger mb-3">Problema 10 — Resumen de Ventas Mensuales</h3>
 
-  <p class="text-muted">Ingrese los datos de ventas por vendedor y producto. Solo se consideran 4 vendedores (1–4) y 5 productos (1–5).</p>
+  <p class="text-muted">
+    Ingrese los datos de ventas por vendedor y producto. Solo se consideran 4 vendedores (1–4) y 5 productos (1–5).
+  </p>
 
   <form method="post" action="{{ route('problema.show', ['p' => 10]) }}">
     @csrf
-    <div class="mb-3">
-      <label class="form-label">Ingrese los datos en formato:</label>
-      <ul>
-        <li>Vendedor (1–4)</li>
-        <li>Producto (1–5)</li>
-        <li>Valor vendido (en USD)</li>
-      </ul>
-      <small class="text-muted">Puedes agregar varios registros de venta.</small>
-    </div>
 
     <div id="vendedores-container">
       <div class="vendedor border p-3 mb-3 rounded">
         <h5>Vendedor 1</h5>
         <input type="hidden" name="vendedores[0][numero]" value="1">
+
         @for ($i = 1; $i <= 5; $i++)
-          <div class="row mb-2">
-            <div class="col-md-6">
-              <label>Producto {{ $i }}</label>
-            </div>
-            <div class="col-md-6">
-              <input type="number" step="0.01" min="0" name="vendedores[0][productos][{{ $i }}][numero]" value="{{ $i }}" hidden>
-              <input type="number" step="0.01" min="0" class="form-control" placeholder="Monto vendido" name="vendedores[0][productos][{{ $i }}][monto]">
-            </div>
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <label>Producto {{ $i }}</label>
           </div>
+          <div class="col-md-6">
+            <input type="number" step="0.01" min="0" name="vendedores[0][productos][{{ $i }}][numero]" value="{{ $i }}" hidden>
+            <input type="number" step="0.01" min="0" class="form-control" placeholder="Monto vendido" name="vendedores[0][productos][{{ $i }}][monto]">
+          </div>
+        </div>
         @endfor
       </div>
     </div>

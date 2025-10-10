@@ -28,4 +28,11 @@ class Validators
         $v = trim((string)$v);
         return preg_match('/^[1-9]\d*$/', $v) === 1;
     }
+
+    public static function esFechaValida(string $fecha): bool
+    {
+        // Comprobar formato YYYY-MM-DD usando DateTime
+        $d = \DateTime::createFromFormat('Y-m-d', $fecha);
+        return $d && $d->format('Y-m-d') === $fecha;
+    }
 }

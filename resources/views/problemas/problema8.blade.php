@@ -2,30 +2,33 @@
 
 @php
 use App\Models\Validators;
-use App\Models\Utils;
 
 $enviado = request()->isMethod('post');
 $fecha = request('fecha');
 $estacion = null;
 $error = null;
+$imagenEstacion = null; // Para guardar la ruta de la imagen
 
 if ($enviado) {
-    // Validar que la fecha no esté vacía y tenga formato correcto
     if (empty($fecha) || !Validators::esFechaValida($fecha)) {
         $error = "Por favor, ingresa una fecha válida.";
     } else {
         $mes = (int) date('m', strtotime($fecha));
         $dia = (int) date('d', strtotime($fecha));
 
-        // Determinar estación según hemisferio norte (puedes ajustar si es sur)
+        // Hemisferio norte
         if (($mes == 12 && $dia >= 21) || $mes == 1 || $mes == 2 || ($mes == 3 && $dia < 21)) {
             $estacion = "Invierno";
+            $imagenEstacion = asset('images/invierno.jpg');
         } elseif (($mes == 3 && $dia >= 21) || $mes == 4 || $mes == 5 || ($mes == 6 && $dia < 21)) {
             $estacion = "Primavera";
-        } elseif (($mes == 6 && $dia >= 21) || $mes == 7 || $mes == 8 || ($mes == 9 && $dia < 21)) {
+            $imagenEstacion = asset('images/primavera.jpg');
+        } elseif (($mes == 6 && $dia >= 21) || $mes == 7 || $mes == 8 || ($mes == 9 && $dia < 23)) {
             $estacion = "Verano";
-        } elseif (($mes == 9 && $dia >= 21) || $mes == 10 || $mes == 11 || ($mes == 12 && $dia < 21)) {
+            $imagenEstacion = asset('images/verano.jpg');
+        } elseif (($mes == 9 && $dia >= 23) || $mes == 10 || $mes == 11 || ($mes == 12 && $dia < 21)) {
             $estacion = "Otoño";
+            $imagenEstacion = asset('images/otono.jpg');
         }
     }
 }
@@ -50,9 +53,13 @@ if ($enviado) {
     @if ($error)
       <div class="alert alert-danger">{{ $error }}</div>
     @else
-      <div class="alert alert-success">
+      <div class="alert alert-success text-center">
         📅 Fecha ingresada: <strong>{{ date('d/m/Y', strtotime($fecha)) }}</strong><br>
         🌤️ Estación correspondiente: <strong>{{ $estacion }}</strong>
+        <br><br>
+        @if($imagenEstacion)
+          <img src="{{ $imagenEstacion }}" alt="{{ $estacion }}" style="max-width: 300px; border-radius: 8px;">
+        @endif
       </div>
     @endif
   @endif
