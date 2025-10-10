@@ -1,21 +1,27 @@
 @include('layouts.header')
 
 @php
+use App\Models\Validators;
+
 $enviado = request()->isMethod('post');
 $presupuesto = request('presupuesto');
 $errores = [];
-$distribucion = [];
+$resultados = [];
+$porcentajes = [
+    'Ginecología' => 0.40,
+    'Pediatría' => 0.30,
+    'Traumatología' => 0.30
+];
 
 if ($enviado) {
-    if (!is_numeric($presupuesto) || $presupuesto <= 0) {
-        $errores[] = "Por favor ingresa un presupuesto válido.";
+    if (!Validators::esNumeroPositivo($presupuesto)) {
+        $errores[] = "Por favor ingresa un presupuesto válido (mayor que 0).";
     } else {
-        $total = (float)$presupuesto;
-        $distribucion = [
-            'Ginecología' => $total * 0.40,
-            'Traumatología' => $total * 0.35,
-            'Pediatría' => $total * 0.25,
-        ];
+        $presupuesto = (float)$presupuesto;
+
+        foreach ($porcentajes as $area => $porc) {
+            $resultados[$area] = $presupuesto * $porc;
+        }
     }
 }
 @endphp
@@ -26,10 +32,10 @@ if ($enviado) {
   <form method="post" action="{{ route('problema.show', ['p' => 6]) }}">
     @csrf
     <div class="mb-3">
-      <label for="presupuesto" class="form-label">Presupuesto anual del hospital (en $)</label>
-      <input type="text" name="presupuesto" id="presupuesto" class="form-control" required value="{{ old('presupuesto') }}">
+      <label for="presupuesto" class="form-label">Presupuesto anual (en dólares)</label>
+      <input type="text" name="presupuesto" id="presupuesto" class="form-control" required value="{{ old('presupuesto', $presupuesto) }}">
     </div>
-    <button class="btn btn-primary-custom">Calcular distribución</button>
+    <button class="btn btn-primary-custom">Calcular</button>
     <a href="{{ route('menu') }}" class="btn btn-secondary">Volver</a>
   </form>
 
@@ -42,29 +48,56 @@ if ($enviado) {
         @endforeach
       </div>
     @else
-      <table class="table table-bordered text-center mt-3">
+      <h5 class="mb-3">Distribución del presupuesto:</h5>
+      <table class="table table-bordered text-center">
         <thead class="table-light">
           <tr>
             <th>Área</th>
             <th>Porcentaje</th>
-            <th>Monto ($)</th>
+            <th>Monto Asignado ($)</th>
           </tr>
         </thead>
         <tbody>
-          @foreach ($distribucion as $area => $monto)
+          @foreach ($resultados as $area => $monto)
           <tr>
             <td>{{ $area }}</td>
-            <td>
-              @if ($area == 'Ginecología') 40%
-              @elseif ($area == 'Traumatología') 35%
-              @else 25%
-              @endif
-            </td>
+            <td>{{ number_format($porcentajes[$area] * 100, 0) }}%</td>
             <td>{{ number_format($monto, 2, ',', '.') }}</td>
           </tr>
           @endforeach
         </tbody>
       </table>
+
+      <div style="max-width: 400px; margin: 0 auto;">
+        <canvas id="graficoPresupuesto"></canvas>
+      </div>
+
+      {{-- Carga de Chart.js y configuración de gráfico --}}
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          const ctx = document.getElementById('graficoPresupuesto').getContext('2d');
+          new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: {!! json_encode(array_keys($resultados)) !!},
+              datasets: [{
+                data: {!! json_encode(array_values($resultados)) !!},
+                backgroundColor: ['#f87171', '#60a5fa', '#34d399']
+              }]
+            },
+            options: {
+              plugins: {
+                legend: { position: 'bottom' },
+                title: {
+                  display: true,
+                  text: 'Distribución del Presupuesto Anual'
+                }
+              }
+            }
+          });
+        });
+      </script>
     @endif
   @endif
 </div>
