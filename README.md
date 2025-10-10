@@ -1,56 +1,34 @@
-# MiniProyecto1 — Resolviendo problemas con estructuras de control (Laravel)
+# miniProyecto1
 
-> Proyecto académico para la asignatura **Ingeniería Web** (UTP) — Mini Proyecto #2  
-> Implementación en **Laravel 11** usando **Bootstrap 5** y CSS personalizado.  
-> Autoría: **[TU NOMBRE]** & **[NOMBRE DE TU COMPAÑERO]**
+## Descripción
+`miniProyecto1` es una aplicación web desarrollada en **Laravel 12** que permite a los usuarios resolver problemas matemáticos y estadísticos simples de forma interactiva. Cada problema se muestra con un formulario, permite ingresar datos, valida los valores ingresados y muestra resultados automáticamente.  
+El proyecto incluye un sistema de **autoría automática** donde se asigna un desarrollador según el número de problema (Cristopher Núñez para problemas impares y Juan Carrion para problemas pares), así como la fecha de resolución.  
 
----
+El diseño utiliza **Bootstrap** para la interfaz y **estilos personalizados** con gradientes, tarjetas y botones con efecto visual moderno.
 
-## 🧾 Portada
-**Título:** Resolviendo problemas con estructuras de decisión y repetición en PHP  
-**Curso:** Ingeniería Web — Facultad de Ingeniería en Sistemas Computacionales (UTP)  
-**Profesor:** Ing. Irina Fong  
-**Fecha de entrega:** [DD/MM/2025]  
-**Grupo:** [Número de grupo]
+## Características principales
+- Formularios para resolver problemas matemáticos y estadísticos.  
+- Validación de entradas: solo se aceptan números positivos.  
+- Cálculo automático de:
+  - Media
+  - Desviación estándar
+  - Mínimo y máximo
+- Footer y firma de autor dinámicos.
+- Interfaz limpia y moderna con **Bootstrap 5** y estilos personalizados.
+- Navegación mediante un menú de selección de problemas.
+- Diseño responsivo para desktop y mobile.
 
----
+## Tecnologías utilizadas
+- **Laravel 12.33.0**  
+- **PHP 8.4.0**  
+- **Bootstrap 5**  
+- **JavaScript** (solo para validaciones menores y mejoras UX)  
+- **CSS personalizado** con gradientes, flexbox y tarjetas  
+- **Composer** para gestión de dependencias
 
-## 📋 Índice
-1. Introducción  
-2. Objetivos  
-3. Metodología  
-4. Estructura del repositorio  
-5. Instalación y ejecución  
-6. Descripción de los problemas implementados  
-7. Validaciones, seguridad y buenas prácticas (PSR-1)  
-8. Capturas de pantalla y cómo generar las tuyas  
-9. Responsabilidad por integrante  
-10. Conclusiones y lecciones aprendidas  
-11. Créditos y Licencia
+## Instalación
+1. Clonar el repositorio:
 
----
-
-## 1. Introducción
-Este repositorio contiene la migración y mejora de un mini proyecto académico originalmente en PHP puro a una aplicación estructurada en **Laravel 11**, con el objetivo de resolver 10 problemas algorítmicos empleando sentencias de control, operadores ternarios, ciclos, arreglos, funciones y clases con métodos estáticos.
-
----
-
-## 2. Objetivos
-
-**Objetivo general:**  
-Construir una aplicación web que demuestre el uso correcto y eficiente de estructuras de control y repeticiones en PHP, priorizando mantenibilidad, claridad y accesibilidad.
-
-**Objetivos específicos:**
-- Implementar formularios con validación segura.
-- Centralizar funciones matemáticas y validación en clases `Utils` y `Validators`.
-- Usar buenas prácticas de codificación (PSR-1).
-- Documentar y presentar el trabajo en un repositorio profesional.
-
----
-
-## 3. Metodología
-Trabajo en **pareja**: cada integrante implementó 5 problemas (total 10), con código modularizado. Se usó Laravel para gestionar rutas, vistas Blade con protección CSRF, y utilidades compartidas en `app/Models` y `app/Support`.
-
----
-
-## 4. Estructura del repositorio
+```bash
+git clone https://github.com/tu-usuario/miniProyecto1.git
+cd miniProyecto1
