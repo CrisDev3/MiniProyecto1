@@ -1,4 +1,5 @@
 @include('layouts.header')
+
 @php
 use App\Models\Utils;
 
@@ -12,10 +13,13 @@ if ($enviado) {
     switch ($metodo) {
         case 'for':
             $suma = 0;
-            for ($i = 1; $i <= $n; $i++) $suma += $i;
+            for ($i = 1; $i <= $n; $i++) {
+                $suma += $i;
+            }
             $resultado = $suma;
             $explicacion = "Suma con bucle for";
             break;
+
         case 'gauss':
             $resultado = Utils::sumaUnoAN($n);
             $explicacion = "Fórmula de Gauss";
@@ -43,11 +47,12 @@ if ($enviado) {
   </form>
 
   @if ($enviado)
-    <div class="alert alert-success">Resultado: <strong>{{ number_format($resultado, 0, ',', '.') }}</strong></div>
+    <div class="alert alert-success">
+      Resultado: <strong>{{ number_format($resultado, 0, ',', '.') }}</strong>
+    </div>
     <p class="text-muted">Método: {{ $explicacion }}</p>
   @endif
 </div>
 
 @include('partials.firma', ['p' => $p])
 @include('layouts.footer')
-

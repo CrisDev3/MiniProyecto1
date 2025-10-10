@@ -9,11 +9,21 @@ $enviado = request()->isMethod('post');
 if ($enviado) {
     for ($i = 1; $i <= 5; $i++) {
         $val = request("n{$i}");
+
+        // Validar como número positivo usando preg_match
         if (!Validators::esNumeroPositivo($val)) {
-            $errores[] = "El número {$i} no es válido.";
+            $errores[] = "El número {$i} no es válido. Debe ser un número positivo.";
         } else {
             $numeros[] = Validators::aFloat($val);
         }
+    }
+
+    // Calcular resultados solo si no hay errores
+    if (empty($errores)) {
+        $media = Utils::media($numeros);
+        $desv = Utils::desviacion($numeros);
+        $min = Utils::minimo($numeros);
+        $max = Utils::maximo($numeros);
     }
 }
 @endphp
@@ -46,12 +56,6 @@ if ($enviado) {
   </form>
 
   @if ($enviado && !$errores)
-    @php
-      $media = Utils::media($numeros);
-      $desv = Utils::desviacion($numeros);
-      $min = Utils::minimo($numeros);
-      $max = Utils::maximo($numeros);
-    @endphp
     <hr>
     <h5>Resultados</h5>
     <ul>
@@ -65,4 +69,3 @@ if ($enviado) {
 
 @include('partials.firma', ['p' => $p])
 @include('layouts.footer')
-

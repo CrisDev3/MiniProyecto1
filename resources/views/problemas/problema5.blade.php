@@ -5,41 +5,53 @@ use App\Models\Validators;
 use App\Models\Utils;
 
 $enviado = request()->isMethod('post');
-$notas = [];
+$edades = [];
 $errores = [];
-$resultado = null;
+$resultado = [];
+$estadisticas = [
+    'Niño' => 0,
+    'Adolescente' => 0,
+    'Adulto' => 0,
+    'Adulto mayor' => 0,
+];
 
 if ($enviado) {
     for ($i = 1; $i <= 5; $i++) {
-        $v = request("nota{$i}");
+        $v = request("edad{$i}");
         if (!Validators::esNumeroPositivo($v)) {
-            $errores[] = "La nota {$i} no es válida.";
+            $errores[] = "La edad {$i} no es válida.";
         } else {
-            $nota = Validators::aFloat($v);
-            if ($nota > 100) $errores[] = "La nota {$i} no puede ser mayor que 100.";
-            else $notas[] = $nota;
-        }
-    }
+            $edad = (int)Validators::aFloat($v);
+            $edades[] = $edad;
 
-    if (!$errores) {
-        $prom = Utils::media($notas);
-        $resultado = $prom >= 71
-            ? "Aprobado con promedio de {$prom}"
-            : "Reprobado con promedio de {$prom}";
+            // Clasificación por categoría
+            if ($edad >= 0 && $edad <= 12) {
+                $categoria = 'Niño';
+            } elseif ($edad >= 13 && $edad <= 17) {
+                $categoria = 'Adolescente';
+            } elseif ($edad >= 18 && $edad <= 64) {
+                $categoria = 'Adulto';
+            } else {
+                $categoria = 'Adulto mayor';
+            }
+
+            $resultado[] = "Persona {$i}: {$edad} años — {$categoria}";
+            $estadisticas[$categoria]++;
+        }
     }
 }
 @endphp
 
 <div class="card-app">
-  <h3 class="text-danger mb-3">Problema 5 — Promedio de Notas</h3>
+  <h3 class="text-danger mb-3">Problema 5 — Clasificación de edades</h3>
 
   <form method="post" action="{{ route('problema.show', ['p' => 5]) }}">
     @csrf
     <div class="row g-3">
       @for ($i=1; $i<=5; $i++)
       <div class="col-md-2">
-        <label class="form-label">Nota {{$i}}</label>
-        <input type="text" name="nota{{$i}}" class="form-control" required value="{{ old("nota{$i}") }}">
+        <label class="form-label">Edad {{$i}}</label>
+        <input type="text" name="edad{{$i}}" class="form-control" required value="{{ old("edad{$i}") }}">
       </div>
       @endfor
     </div>
@@ -56,11 +68,21 @@ if ($enviado) {
         @endforeach
       </div>
     @else
-      <div class="alert alert-success">{{ $resultado }}</div>
+      <div class="alert alert-success">
+        @foreach ($resultado as $r)
+          <div>{{ $r }}</div>
+        @endforeach
+        <hr>
+        <h6>Estadísticas de categorías:</h6>
+        <ul>
+          @foreach ($estadisticas as $cat => $cant)
+            <li>{{ $cat }}: {{ $cant }}</li>
+          @endforeach
+        </ul>
+      </div>
     @endif
   @endif
 </div>
 
 @include('partials.firma', ['p' => $p])
 @include('layouts.footer')
-
