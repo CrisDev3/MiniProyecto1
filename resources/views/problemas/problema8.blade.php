@@ -1,3 +1,14 @@
+/*
+Estación del Año 
+Al ingresar la fecha, devolver 
+la estación de año de acuerdo 
+con la siguiente tabla (ver 
+imagen de la estación del Año) 
+Ver Referencia página #7 
+Datos prueba. 
+*/
+
+
 @include('layouts.header')
 
 @php

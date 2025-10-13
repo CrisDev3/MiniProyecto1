@@ -1,3 +1,17 @@
+/*
+Calculadora de Datos 
+Estadísticos 
+Pedir la cantidad de notas que 
+desea ingresar el usuario. 
+Luego pedir esas notas y 
+calcular el promedio, la 
+desviación estándar, la nota, 
+mínima y la máxima. Usar 
+foreach (o un ciclo que recorra 
+una colección).
+*/
+
+
 @include('layouts.header')
 
 @php

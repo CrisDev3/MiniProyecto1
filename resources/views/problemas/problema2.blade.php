@@ -1,3 +1,10 @@
+/*
+Calcular la suma de los 
+números del 1 al 1,000.  
+500500 problema #2 
+*/
+
+
 @include('layouts.header')
 
 @php

@@ -1,3 +1,12 @@
+/*
+Calcular la media, desviación 
+estándar, el número min y el 
+máx de los 5 primeros 
+números positivos introducidos 
+a partir de un formulario.  
+*/
+
+
 @php
 use App\Models\Validators;
 use App\Models\Utils;

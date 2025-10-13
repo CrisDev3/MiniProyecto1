@@ -1,3 +1,14 @@
+/*
+Solicitar un número (1 al 9) 
+Generar o imprimir las 
+15 primeras potencias 
+del número ( 4 elevado 
+a la 1, 4 elevado a la 
+dos, …. 
+Problema #9 
+*/
+
+
 @include('layouts.header')
 
 @php

@@ -1,3 +1,14 @@
+/*
+Imprimir los N – 
+primeros múltiplos de 4, 
+dónde N es un valor 
+introducido por teclado. 
+(4*1=4; 
+4*2=;4*3=)…Desborda
+miento? 
+*/
+
+
 @include('layouts.header')
 
 @php

@@ -1,3 +1,14 @@
+/*
+En un hospital existen tres 
+áreas: Ginecología, Pediatría y 
+Traumatología. El presupuesto 
+anual del hospital se reparte 
+conforme a la siguiente tabla 
+Ver Referencia página #7 
+Integrar Gráficas. 
+*/
+
+
 @include('layouts.header')
 
 @php

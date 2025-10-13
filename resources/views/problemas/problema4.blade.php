@@ -1,3 +1,12 @@
+/*
+Se desea calcular 
+independientemente la suma 
+de los número pares e 
+impares comprendidos entre 1 
+y 200.  
+*/
+
+
 @include('layouts.header')
 
 @php

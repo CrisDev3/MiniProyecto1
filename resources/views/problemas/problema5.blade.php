@@ -1,3 +1,15 @@
+/*
+Leer la edad de 5 personas y 
+clasificar cada una en una 
+categoría: niño (0-12), 
+adolescente (13-17), adulto 
+(18-64), adulto mayor (65+). 
+Generar Estadísticas si se 
+repiten las edades. Integrar 
+gráficas.
+*/
+
+
 @include('layouts.header')
 
 @php
