@@ -42,8 +42,8 @@ if ($enviado) {
   @if ($enviado)
     <hr>
     <div class="alert alert-success">
-      <div>Suma de números pares: <strong>{{ number_format($sumaPares, 0, ',', '.') }}</strong></div>
-      <div>Suma de números impares: <strong>{{ number_format($sumaImpares, 0, ',', '.') }}</strong></div>
+      <div>Suma de números pares: <strong>{{ number_format($sumaPares, 0, '.', ',') }}</strong></div>
+      <div>Suma de números impares: <strong>{{ number_format($sumaImpares, 0, '.', ',') }}</strong></div>
     </div>
   @endif
 </div>

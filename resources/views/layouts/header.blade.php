@@ -13,4 +13,4 @@
   </div>
 </nav>
 
-<div class="container mt-4 flex-grow-1">
+<div class="container main-content">

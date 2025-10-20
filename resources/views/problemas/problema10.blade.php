@@ -12,11 +12,11 @@ $totalesVendedores = [];
 $granTotal = 0;
 
 // Inicializar ventas con ceros
-for ($p = 1; $p <= 5; $p++) {
+for ($i = 1; $i <= 5; $i++) {
     for ($v = 1; $v <= 4; $v++) {
-        $ventas[$p][$v] = 0.0;
+        $ventas[$i][$v] = 0.0;
     }
-    $totalesProductos[$p] = 0.0;
+    $totalesProductos[$i] = 0.0;
 }
 for ($v = 1; $v <= 4; $v++) {
     $totalesVendedores[$v] = 0.0;
@@ -48,11 +48,11 @@ if ($enviado) {
         }
 
         // Calcular totales por producto y vendedor
-        for ($p = 1; $p <= 5; $p++) {
-            $totalesProductos[$p] = array_sum($ventas[$p]);
-            $granTotal += $totalesProductos[$p];
+        for ($i = 1; $i <= 5; $i++) {
+            $totalesProductos[$i] = array_sum($ventas[$i]);
+            $granTotal += $totalesProductos[$i];
             for ($v = 1; $v <= 4; $v++) {
-                $totalesVendedores[$v] += $ventas[$p][$v];
+                $totalesVendedores[$v] += $ventas[$i][$v];
             }
         }
 
@@ -117,13 +117,13 @@ if ($enviado) {
           </tr>
         </thead>
         <tbody>
-          @for ($p = 1; $p <= 5; $p++)
+          @for ($i = 1; $i <= 5; $i++)
           <tr>
-            <td>{{ $p }}</td>
+            <td>{{ $i }}</td>
             @for ($v = 1; $v <= 4; $v++)
-              <td>{{ number_format($resultado['ventas'][$p][$v], 2) }}</td>
+              <td>{{ number_format($resultado['ventas'][$i][$v], 2) }}</td>
             @endfor
-            <td><strong>{{ number_format($resultado['totalesProductos'][$p], 2) }}</strong></td>
+            <td><strong>{{ number_format($resultado['totalesProductos'][$i], 2) }}</strong></td>
           </tr>
           @endfor
           <tr class="table-secondary">
